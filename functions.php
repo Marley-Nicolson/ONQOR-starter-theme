@@ -129,26 +129,6 @@ new image size.
   - Create some boilerplate Sections, Controls and Settings
 */
 
-function bones_theme_customizer($wp_customize) {
-  // $wp_customize calls go here.
-  //
-  // Uncomment the below lines to remove the default customize sections 
-
-  // $wp_customize->remove_section('title_tagline');
-  // $wp_customize->remove_section('colors');
-  // $wp_customize->remove_section('background_image');
-  // $wp_customize->remove_section('static_front_page');
-  // $wp_customize->remove_section('nav');
-
-  // Uncomment the below lines to remove the default controls
-  // $wp_customize->remove_control('blogdescription');
-  
-  // Uncomment the following to change the default section titles
-  // $wp_customize->get_section('colors')->title = __( 'Theme Colors' );
-  // $wp_customize->get_section('background_image')->title = __( 'Images' );
-}
-
-add_action( 'customize_register', 'bones_theme_customizer' );
 
 /************* ACTIVE SIDEBARS ********************/
 
@@ -164,30 +144,6 @@ function bones_register_sidebars() {
 		'after_title' => '</h4>',
 	));
 
-	/*
-	to add more sidebars or widgetized areas, just copy
-	and edit the above sidebar code. In order to call
-	your new sidebar just use the following code:
-
-	Just change the name to whatever your new
-	sidebar's id is, for example:
-
-	register_sidebar(array(
-		'id' => 'sidebar2',
-		'name' => __( 'Sidebar 2', 'bonestheme' ),
-		'description' => __( 'The second (secondary) sidebar.', 'bonestheme' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h4 class="widgettitle">',
-		'after_title' => '</h4>',
-	));
-
-	To call the sidebar in your template, you can just copy
-	the sidebar.php file and rename it to your sidebar's name.
-	So using the above example, it would be:
-	sidebar-sidebar2.php
-
-	*/
 } // don't remove this bracket!
 
 
@@ -231,17 +187,18 @@ function bones_comments( $comment, $args, $depth ) {
 } // don't remove this bracket!
 
 
-/*
-This is a modification of a function found in the
-twentythirteen theme where we can declare some
-external fonts. If you're using Google Fonts, you
-can replace these fonts, change it in your scss files
-and be up and running in seconds.
-*/
-function bones_fonts() {
-  wp_enqueue_style('googleFonts', '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic');
-}
+// Load the theme stylesheets
+function theme_styles()  
+{ 
 
-add_action('wp_enqueue_scripts', 'bones_fonts');
+  // Load all of the styles that need to appear on all pages
+  wp_enqueue_style( 'main', get_template_directory_uri() . 'dist/styles/all.min.min.css' );
+  
+  wp_enqueue_script( 'main', get_template_directory_uri() . 'dist/scripts/all.min.min.js', true );
+
+
+
+}
+add_action('wp_enqueue_scripts', 'theme_styles');
 
 /* DON'T DELETE THIS CLOSING TAG */ ?>
