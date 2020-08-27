@@ -27,7 +27,8 @@ var build = {
     dest: './dist/styles/'
   },
   scripts: {
-    src: './build_assets/js/**',
+    src: './build_assets/js/*.js',
+    dep: './build_assets/js/dep/**',
     dest:'./dist/scripts/'
   },
   plugins: {
@@ -50,7 +51,8 @@ var build = {
 
 function js() {
 
-    return src(build.plugins.js)
+    return src(build.scripts.dep)
+        .pipe(src(build.plugins.js))
         .pipe(src(build.scripts.src))
         .pipe(concat('all.min.js'))
         .pipe(uglify())
@@ -92,9 +94,9 @@ function css() {
 // Watch files
 
 function watchFiles() {
-    watch('./build_assets/scss/*', css);
+    watch('./build_assets/scss/**', css);
     watch('./build_assets/js/*', js);
-    watch('./build_assets/img/*', img);
+    // watch('./build_assets/img/*', img);
 }
 
 // BrowserSync
